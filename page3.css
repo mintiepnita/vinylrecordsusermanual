@@ -1,0 +1,546 @@
+.body {
+  margin: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 98vh;
+  max-width: 100vw;
+  overflow: hidden;
+  overflow-x: hidden;
+  backface-visibility: hidden;
+  position: relative;
+}
+
+/* Add grain overlay */
+.container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 600'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E");
+  opacity: var(--grain-opacity);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: 999;
+}
+
+.text {
+  font-family: "Courier New", Courier, monospace;
+  color: #0088ff;
+  font-size: 2vh;
+  white-space: pre;
+  word-wrap: break-word;
+  filter: brightness(1) contrast(1);
+  background-color: #fffdf2;
+}
+
+.special-char {
+  color: #ff27e9;
+}
+
+.control-box {
+  font-family: 'Space Mono', monospace;
+  font-size: 3.5vh;
+  position: fixed;
+  top: 2vh;
+  left: 2vw;
+  background-color: white;
+  color: black;
+  opacity: 0.9;
+  padding: 1.5vh;
+  border-radius: 1vh;
+  border: 0.2vh solid #ccc;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 0.4vh 0.8vh rgba(0, 0, 0, 0.2);
+  max-width: 22vw;
+  height: calc(96vh - 4vh);
+  transition: transform 0.3s ease-in-out, max-width 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+label,
+input,
+button {
+  font-size: 1.4vh;
+  margin-bottom: 0.8vh;
+}
+
+.hidden {
+  transform: translateX(-220px);
+}
+
+/********************************** Input range ***********************************/
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  cursor: pointer;
+  outline: none;
+  overflow: hidden;
+  border-radius: 2vh;
+}
+
+/* Track: webkit browsers */
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 2.45vh;
+  background: #ccc;
+  border-radius: 2.5vh;
+}
+
+/* Track: Mozilla Firefox */
+input[type="range"]::-moz-range-track {
+  height: 2.45vhpx;
+  background: #ccc;
+  border-radius: 2.5vh;
+}
+
+/* Thumb: webkit */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 2.45vh;
+  width: 2.45vh;
+  background-color: #fff;
+  border-radius: 50%;
+  border: 0.2vh solid rgb(0, 0, 0);
+  box-shadow: -54vh 0 0 53vh rgb(41, 41, 41);
+}
+
+
+/* Thumb: Firefox */
+input[type="range"]::-moz-range-thumb {
+  height: 2.45vh;
+  width: 2.45vh;
+  background-color: #fff;
+  border-radius: 50%;
+  border: 0.2vh solid #f50;
+  box-shadow: -54vh 0 0 53vh rgb(41, 41, 41);
+}
+
+#toggle-button {
+  position: fixed;
+  top: 2vh;
+  left: 2vw;
+  z-index: 1001;
+  padding: 10px;
+  border-radius: 50px;
+  font-family: "Courier New", Courier, monospace;
+  background-color: transparent;
+  color: black;
+  border: none;
+  font-size: 5vh;
+  cursor: pointer;
+}
+
+#toggle-button:hover {
+  background-color: black;
+}
+
+.close-button {
+  align-self: flex-end;
+  background-color: transparent;
+  border: none;
+  font-size: 2vh;
+  color: #555;
+  cursor: pointer;
+}
+
+.close-button:hover {
+  color: #333;
+}
+
+/********************************** Next Button ***********************************/
+#next-button {
+  position: fixed;
+  top: 50%;
+  right: 2vw;
+  z-index: 1001;
+  padding: 15px;
+  border-radius: 50px;
+  font-family: "Courier New", Courier, monospace;
+  background-color: transparent;
+  color: black;
+  border: none;
+  font-size: 4vh;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+#next-button:hover {
+  background-color: black;
+  color: white;
+}
+
+#next-button:active {
+  transform: scale(0.95);
+}
+
+/****************************************** Back Button **************************************************/
+#back-button {
+  position: fixed;
+  top: 50%;
+  left: 2vw;
+  z-index: 1001;
+  padding: 15px;
+  border-radius: 50px;
+  font-family: "Courier New", Courier, monospace;
+  background-color: transparent;
+  color: black;
+  border: none;
+  font-size: 4vh;
+  cursor: pointer;
+}
+
+#back-button:hover {
+  background-color: black;
+  color: white;
+}
+
+#back-button:active {
+  transform: scale(0.95);
+}
+
+/******************************* Reset button *************************************/
+.reset-button {
+  font-family: 'Space Mono', monospace;
+  margin-top: 1vh;
+  padding: 0.8vh 1.5vw;
+  background-color: #f00;
+  color: white;
+  border: none;
+  border-radius: 1vh;
+  cursor: pointer;
+}
+
+.reset-button:hover {
+  background-color: #3b0101;
+}
+
+/******************************* Font Button *************************************/
+select {
+  padding: 0.5vh;
+  font-size: 1.4vh;
+  margin-bottom: 0.8vh;
+}
+
+/******************************* Color Picker *************************************/
+.pickr {
+  margin-bottom: 1.2vh;
+}
+
+.pickr .pcr-button {
+  width: 100%;
+  height: 6vh;
+  border: none;
+  box-shadow: 0vh 0.3vh 0.5vh rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.pickr .pcr-button:hover {
+  box-shadow: 0vh 0.5vh 1vh rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+.pcr-app {
+  background: #f7f7f7;
+  border-radius: 1.4vh;
+  box-shadow: 0vh 0.5vh 1.4vh rgba(0, 0, 0, 0.3);
+}
+
+
+.pcr-app .pcr-interaction input:focus {
+  border-color: #0088ff;
+  outline: none;
+}
+
+.pcr-app .pcr-interaction .pcr-save,
+.pcr-app .pcr-interaction .pcr-clear {
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.3s ease;
+}
+
+/********************************** Take record off button ***********************************/
+@keyframes vinyl-slide-out {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(-100vw);
+    opacity: 0;
+  }
+}
+
+.vinyl-slide-out {
+  animation: vinyl-slide-out 1s forwards;
+}
+
+.take-record-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  cursor: pointer;
+  width: 22vh;
+  height: 4vh;
+  background-image: linear-gradient(to top, #D8D9DB 0%, #fff 80%, #FDFDFD 100%);
+  border-radius: 2vh;
+  border: 0.1vh solid #8F9092;
+  transition: all 0.2s ease;
+  font-family: 'Space Mono', monospace;
+  font-size: 1.8vh;
+  font-weight: 600;
+  color: #606060;
+  margin: 1vh;
+  padding: 0.8vh 1.5vw;
+}
+
+.take-record-button:hover {
+  box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 3px 3px #CECFD1;
+}
+
+.take-record-button:active {
+  box-shadow: 0 4px 3px 1px #FCFCFC, 0 6px 8px #D6D7D9, 0 -4px 4px #CECFD1, 0 -6px 4px #FEFEFE, inset 0 0 5px 3px #999, inset 0 0 30px #aaa;
+}
+
+.take-record-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+/********************************** Print Button ***********************************/
+.print-button {
+  position: fixed;
+  top: 2.5%;
+  right: 2%;
+  z-index: 1001;
+  padding: 10px;
+  border-radius: 50px;
+  font-family: "Courier New", Courier, monospace;
+  background-color: transparent;
+  color: black;
+  border: none;
+  font-size: 5vh;
+  cursor: pointer;
+}
+
+.print-button:hover {
+  background-color: black;
+  color: white;
+}
+
+@media print {
+  #print-button {
+    display: none;
+  }
+
+  .control-box {
+    display: none;
+  }
+
+  .toggle-button {
+    display: none;
+  }
+
+  .next-button {
+    display: none;
+  }
+
+  .back-button {
+    display: none;
+  }
+
+  @page {
+    size: auto;
+    margin: 0;
+    size: landscape;
+  }
+}
+
+/********************************** Media Queries ***********************************/
+
+
+@media (min-width: 320px) {
+  .control-box {
+    font-size: 3vh;
+    max-width: 90vw;
+  }
+
+  label,
+  input,
+  button {
+    font-size: 1.5vh;
+  }
+
+  input[type='checkbox'] {
+    --control-height: 3vh;
+  }
+}
+
+@media (max-width: 600px) {
+  :root {
+    --control-height: 4vh;
+  }
+}
+
+/* Styles specifically for mobile devices */
+@media (max-width: 767px) {
+  .control-box {
+    font-size: 4vh;
+  }
+
+  label,
+  input,
+  button {
+    font-size: 1.8vh;
+  }
+
+  input[type="range"] {
+    height: 2.5vh;
+  }
+
+  input[type='checkbox'] {
+    --control-height: 4vh;
+    width: calc(var(--control-height) * 2.20);
+  }
+}
+
+/* General desktop and tablet styles */
+@media (min-width: 768px) {
+  .control-box {
+    font-size: 3.5vh;
+    max-width: 25vw;
+  }
+
+  label,
+  input,
+  button {
+    font-size: 1.6vh;
+  }
+
+  .hidden {
+    transform: translateX(-3100px)
+  }
+
+  input[type='checkbox'] {
+    --control-height: 3vh;
+  }
+}
+
+/* Tablet-specific styles */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .control-box {
+    font-size: 4vh;
+    max-width: 20vw;
+  }
+
+  label,
+  input,
+  button {
+    font-size: 1.8vh;
+  }
+
+  input[type="range"] {
+    height: 2vh;
+  }
+
+  input[type='checkbox'] {
+    --control-height: 3.5vh;
+  }
+}
+
+/* Desktop styles */
+@media (min-width: 1025px) {
+  .control-box {
+    font-size: 3.5vh;
+    max-width: 20vw;
+  }
+
+  label,
+  input,
+  button {
+    font-size: 2vh;
+  }
+
+  input[type='checkbox'] {
+    --control-height: 2.7vh;
+  }
+}
+
+/*************************************************** Animation **************************************************/
+@keyframes slide-in {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.slide-in {
+  animation: slide-in 0.5s forwards;
+}
+
+@keyframes slide-out {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(100vw);
+    opacity: 0;
+  }
+}
+
+.slide-out {
+  animation: slide-out 0.5s forwards;
+}
+
+@keyframes slide-out-left {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(-100vw);
+    opacity: 0;
+  }
+}
+
+.slide-out-left {
+  animation: slide-out-left 0.5s forwards;
+}
+
+@keyframes slide-in-left {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.slide-in-left {
+  animation: slide-in-left 0.5s forwards;
+}
