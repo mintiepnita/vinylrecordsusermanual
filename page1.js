@@ -181,29 +181,6 @@ grainControl.addEventListener('input', (e) => {
   document.documentElement.style.setProperty('--grain-opacity', e.target.value);
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  const infoButton = document.getElementById("info-button");
-  const infoModal = document.getElementById("info-modal");
-  const closeInfoButton = document.getElementById("close-info");
-
-  // Show the modal when the info button is clicked
-  infoButton.addEventListener("click", () => {
-    infoModal.classList.remove("hidden");
-  });
-
-  // Hide the modal when the close button is clicked
-  closeInfoButton.addEventListener("click", () => {
-    infoModal.classList.add("hidden");
-  });
-
-  // Hide the modal when clicking outside the content area
-  infoModal.addEventListener("click", (e) => {
-    if (e.target === infoModal) {
-      infoModal.classList.add("hidden");
-    }
-  });
-});
-
 const infoButton = document.getElementById('info-button');
 const infoBox = document.getElementById('info-box');
 const infoCloseButton = document.getElementById('info-close-button');
