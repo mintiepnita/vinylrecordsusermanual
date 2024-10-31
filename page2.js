@@ -189,7 +189,7 @@ backButton.addEventListener('click', function () {
   container.classList.add('slide-out');
   // Wait animation to complete before navigating to the next page
   setTimeout(function () {
-    window.location.href = 'page1.html';
+    window.location.href = 'index.html';
   });
 });
 
