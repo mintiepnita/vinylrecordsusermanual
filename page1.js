@@ -181,6 +181,7 @@ grainControl.addEventListener('input', (e) => {
   document.documentElement.style.setProperty('--grain-opacity', e.target.value);
 });
 
+//Info box
 const infoButton = document.getElementById('info-button');
 const infoBox = document.getElementById('info-box');
 const infoCloseButton = document.getElementById('info-close-button');
